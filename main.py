@@ -68,40 +68,39 @@ keys: primary and secondary.
 
 Primary categories: Enchantment Payments, \
 Mystic Mastery Support, Account Alchemy Management, \
-Arcane Questions and Queries.
+Arcane Questions and Queries. \
 
-Billing secondary categories:
-Unravel or Upgrade Potent Potions
-Enroll a New Payment Incantation
-Clarify Mystical Charges
-Dispute a Magical Transaction
+Billing secondary categories: \
+Unravel or Upgrade Potent Potions \
+Enroll a New Payment Incantation \
+Clarify Mystical Charges \
+Dispute a Magical Transaction \
 
-Technical Support secondary categories:
-Sorcerous Troubleshooting
-Device Compatibility Conjurations
-Software Alchemy Updates
+Technical Support secondary categories: \
+Sorcerous Troubleshooting \
+Device Compatibility Conjurations \
+Software Alchemy Updates \
 
-Account Management secondary categories:
-Password Transfiguration
-Personal Wizardry Adjustment
-Conclude Magical Account
-Secure the Arcane Vault
+Account Management secondary categories: \
+Password Transfiguration \
+Personal Wizardry Adjustment \
+Conclude Magical Account \
+Secure the Arcane Vault \
 
-General Inquiry secondary categories:
-Potion Lore Acquisition
-Enchantment Pricing Deciphering
-Feedback for Magical Enhancements
-Summon a Wizardly Adviser
-
+General Inquiry secondary categories: \
+Potion Lore Acquisition \
+Enchantment Pricing Deciphering \
+Feedback for Magical Enhancements \
+Summon a Wizardly Adviser \
 """
 
 main_system_message = f"""
 You are a wizard named Narelis who is responsible for answering a customer's questions about items in your shop, named "Potions & Other Wizardly Things."\
 The customer question will be delimited with \
-{delimiter} characters.
-
+{delimiter} characters. \
+Give a short reponse, limiting your response length to at most, 3 sentences. \
 I will list the items you have in stock for sale, along with their price and short descriptions of them. \
-Each item will be delimited with {delimiter} characters.
+Each item will be delimited with {delimiter} characters. \
 """ + items
 
 moderation_system_message = f"""
@@ -184,13 +183,13 @@ def finalResponse(question, writeout_system_message, delimiter):
     {'role':'user', 
     'content': f"{delimiter}{question}{delimiter}"},  
     ] 
-    outputResponse = get_completion_from_messages(finalResponseInstructions)
+    outputResponse = get_completion_from_messages(finalResponseInstructions, "gpt-4-0125-preview")
     print(outputResponse)
 
 if __name__ == "__main__":
-    question = input('Welcome to "Potions & Other Wizardly Things!" My name is Narelis, an AI shopping assistant. How can I help you? \n')
-    print('\n')
+    question = input('Welcome to "Potions & Other Wizardly Things!" My name is Narelis, an AI shopping assistant. How can I help you? \n \n')
     while True:
+        print('\n')
         if not maliciousCheck(question, moderation_system_message, delimiter):
             writeResponseInfo(question, writeout_system_message, delimiter)
             finalResponse(question, main_system_message, delimiter)
